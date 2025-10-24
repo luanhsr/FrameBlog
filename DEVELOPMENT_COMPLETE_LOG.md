@@ -68,3 +68,13 @@
 - **Observações:**
     - Apenas os atributos, anotações JPA iniciais e a configuração do relacionamento foram escritos manualmente. Getters, setters e construtores foram gerados pela IDE.
     - **Boa Prática:** Utilização da palavra-chave `final` nos parâmetros dos construtores das entidades para promover a imutabilidade dos atributos e evitar reatribuições acidentais.
+---
+## Commit 6: Definição do Enum de Papéis de Usuário (RoleEnum)
+- **Data:** 25-10-25
+- **Local:** `com.descomplica.FrameBlog.enums`
+- **Arquivo:** `RoleEnum.java`
+- **Descrição:**
+    - Edicao da classe `enum` `RoleEnum`.
+    - Definição de dois papéis de usuário principais: `ADMIN` e `USER`.
+    - Atribuição de um valor `String` ("admin", "user") para cada papel.
+    - **Objetivo:** Estabelecer um sistema de categorização para os usuários da aplicação, permitindo a implementação de controle de acesso e permissões baseadas em perfis.
