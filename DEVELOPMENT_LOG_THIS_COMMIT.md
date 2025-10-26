@@ -1,20 +1,17 @@
 # Diário de Bordo do Projeto - App de Postagens
 
-## Commit 7: Refinamento da Entidade Post e Criação do Package de Repositórios
-- **Data:** 26-10-25 (Assumindo a próxima data sequencial)
-- **Local:** `com.descomplica.FrameBlog.models` e `com.descomplica.FrameBlog.repositories`
+## Commit 8: Criação das Implementações de Serviço
+- **Data:** 26-10-25
+- **Local:** `com.descomplica.FrameBlog.services.impl`
 - **Descrição:**
-    - **Refinamento da Entidade `Post.java`:**
-        - Adicionada a anotação `@Table(name = "Post")` para explicitamente definir o nome da tabela no banco de dados.
-        - Verificação e ajuste final do construtor, getters e setters para garantir a conformidade com as boas práticas (uso de `final` nos parâmetros do construtor).
-        - Confirmação do relacionamento `@ManyToOne` com a entidade `User`.
-    - **Criação do Package `repositories`:**
-        - Criado o package `com.descomplica.FrameBlog.repositories`.
-        - Adicionadas as interfaces `CommentRepository`, `PostRepository`, `TagRepository` e `UserRepository`.
-        - **Objetivo:**
-            - Definir os contratos para a camada de acesso a dados (DAO - Data Access Object) utilizando as funcionalidades do Spring Data JPA.
-            - Preparar a arquitetura para a interação direta com o banco de dados para operações CRUD em cada entidade, separando a lógica de persistência da lógica de negócio.
-            - Garantir que as interfaces de serviço (criadas no Commit 3) possam interagir com a camada de persistência de forma padronizada.
+    - Criado o package `impl` (de "implementation") dentro do package `services`.
+    - Adicionadas as classes `CommentServiceImpl.java`, `PostServiceImpl.java`, `TagServiceImpl.java` e `UserServiceImpl.java` dentro do novo package `services.impl`.
+    - Cada uma dessas classes foi criada para **implementar** sua respectiva interface de serviço (`CommentService`, `PostService`, `TagService`, `UserService`) definida no Commit 3.
+- **Objetivo Detalhado:**
+    - **Definir o "Como" da Lógica de Negócio:** Enquanto as interfaces de serviço (no package `services`) definem **o quê** uma funcionalidade de negócio deve fazer (o contrato), as classes `*ServiceImpl` são onde a lógica **de como** essa funcionalidade será executada é escrita. É aqui que os métodos como `salvarUser()`, `buscarPostPorId()`, etc., terão sua implementação concreta.
+    - **Separar Interface de Implementação:** Esta separação é uma prática de design crucial que promove o **baixo acoplamento**. Outras partes da aplicação (como os controladores) dependerão apenas das interfaces de serviço, e não das classes de implementação concretas. Isso significa que podemos mudar a lógica interna de um `*ServiceImpl` sem afetar os componentes que o utilizam, desde que o contrato da interface seja mantido.
+    - **Facilitar Testes e Manutenção:** Ao isolar as implementações, torna-se mais fácil testar cada serviço de forma independente. Em cenários de teste, podemos até mesmo criar "mock" ou "test" de implementações para as interfaces, simulando o comportamento do serviço sem a necessidade da lógica real.
+    - **Preparo para Injeção de Dependência (Spring):** O Spring (o framework que estamos usando) faz uso extensivo dessa arquitetura baseada em interfaces para injetar as dependências corretamente. Ele saberá qual `*ServiceImpl` deve ser fornecido quando um `*Service` for solicitado em um controlador, por exemplo.
 - **Observações:**
-    - As interfaces de repositório foram criadas vazias (ou estendendo `JpaRepository` ou similar, implicitamente) como *placeholders* para futuras implementações, seguindo o mesmo padrão inicial das interfaces de serviço.
-    - A adição explícita de `@Table(name = "Post")` à entidade `Post` melhora a clareza e controle sobre o nome da tabela gerada pelo JPA.
+    - Inicialmente, essas classes de implementação estão vazias ou contêm apenas os esqueletos dos métodos da interface (se já gerados pela IDE), aguardando a lógica de negócio real e a injeção dos repositórios (criados no Commit 7) para interagir com o banco de dados.
+    - Esta é uma etapa fundamental para a construção de uma aplicação robusta e escalável, alinhada com princípios de design como SOLID (especialmente o Princípio da Inversão de Dependência).
